@@ -8,12 +8,32 @@ from rest_framework.response import Response
 
 class ListTodo(
     mixins.ListModelMixin,
+    mixins.CreateModelMixin,
     generics.GenericAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     
     def get (self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+    
+    def post (self, request, *args, **kwargs):
+        return self.create( request, *args, **kwargs)
+    
+    
+class DetailTodo(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    generics.GenericAPIView
+):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    
+    def get (self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    
+    def post (self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
 
 
