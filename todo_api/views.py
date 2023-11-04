@@ -1,22 +1,20 @@
 from .models import Todo
 from .serializers import TodoSerializer
 
+from rest_framework import mixins
 from rest_framework import generics, status
 from rest_framework.response import Response
 
 
-class GetAllTodo(generics.ListAPIView):
+class ListTodo(
+    mixins.ListModelMixin,
+    generics.GenericAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
+    
+    def get (self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-    def list(self, request):
-
-        todos = self.get_queryset()
-        if not todos:
-            return Response({"error": "No todos found."}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = TodoSerializer(todos, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class CreateTodo(generics.CreateAPIView):
