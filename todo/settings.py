@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-xhxiodkh5c04cwv%1y9(tq+2on51l9ly^y%2hyhu4pi-jb0iio
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1', 'todoappdeploy.pythonanywhere.com']
+##'127.0.0.1', 'todoappdeploy.pythonanywhere.com', 
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,7 +41,10 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
+    
     'todo_api',
+    'user',
+    
 ]
 
 MIDDLEWARE = [
@@ -105,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'user.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -129,6 +133,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTHENTICATION_BACKENDS = [
+    'user.auth_back.EmailBackend'
+]
+
 
 REST_FRAMEWORK = {
 
@@ -138,3 +146,12 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+SITE_ID = 1
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
