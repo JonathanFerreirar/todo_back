@@ -1,15 +1,18 @@
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
-from rest_framework import generics, status
+from rest_framework import generics, status,mixins
 from rest_framework.response import Response
 
 User = get_user_model()
 
-class RegisterUser(generics.CreateAPIView):
+class RegisterUser(generics.GenericAPIView, mixins.ListModelMixin):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-    def create(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
 
         serializer = self.get_serializer(data=request.data)
         
@@ -29,3 +32,9 @@ class RegisterUser(generics.CreateAPIView):
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+# class ListUser(generics.ListCreateAPIView) :
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+    
+    

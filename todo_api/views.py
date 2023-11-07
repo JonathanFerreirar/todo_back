@@ -3,6 +3,9 @@ from .serializers import TodoSerializer
 
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework.response import Response
+
+from django.contrib.auth import authenticate
 
 
 class ListTodo(
@@ -13,10 +16,12 @@ class ListTodo(
     serializer_class = TodoSerializer
     
     def get (self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return self.list(request, *args, **kwargs)
     
     def post (self, request, *args, **kwargs):
-        return self.create( request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return self.create( request, *args, **kwargs)
     
     
 class DetailTodo(
@@ -28,13 +33,27 @@ class DetailTodo(
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     
-    def get (self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
+    def get (self, request, pk,*args, **kwargs):
+        if request.user.is_authenticated:
+            
+            todo = Todo.objects.get(id=pk)
+            print(todo)
+            
+            return Response({
+                "data": "ok"
+            })
+            #return self.retrieve(request, *args, **kwargs)
+        else:
+            return Response({
+                "error": "user is not authenticated"
+            })
     
     def put (self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return self.partial_update(request, *args, **kwargs)
 
     def delete (self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return self.destroy(request, *args, **kwargs)
 
 
