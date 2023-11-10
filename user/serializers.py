@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("email", 'password', 'photo', 'name')
+        fields = ("id", "email", 'password', 'photo', 'name')
 
         extra_kwargs = {
             'password': {"write_only": True}
@@ -21,7 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
         password = validated_data.get('password')
         photo = validated_data.get('photo')
         name = validated_data.get('name')
-        print(name)
 
         user = User.objects.create_user(
             email=email,
@@ -55,4 +54,3 @@ class UserSerializer(serializers.ModelSerializer):
 #             return instance
 
 #         raise serializers.ValidationError("Wrong password")
-
