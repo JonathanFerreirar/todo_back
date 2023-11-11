@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-xhxiodkh5c04cwv%1y9(tq+2on51l9ly^y%2hyhu4pi-jb0iio
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-##'127.0.0.1', 'todoappdeploy.pythonanywhere.com', 
+# '127.0.0.1', 'todoappdeploy.pythonanywhere.com',
 ALLOWED_HOSTS = []
 
 
@@ -43,10 +43,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    
+
     'todo_api',
     'user',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -145,13 +145,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-      'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-      ]
+    ]
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
