@@ -14,10 +14,15 @@ from user.models import User
 class isOwner(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method == 'POST':
-            if request.data['user'] == request.user.id:
-                return True
-
-            raise exceptions.PermissionDenied(detail='request not allowed')
+            try:
+                user = request.data['user']
+                if user == request.user.id:
+                    return True
+                else:
+                    raise exceptions.PermissionDenied(detail='request not allowed')              
+            except:
+                raise exceptions.PermissionDenied(detail='request not allowed')
+                
         return True
 
 

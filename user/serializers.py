@@ -30,27 +30,10 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
         return user
+    
+
+class GoogleSerializer(serializers.Serializer):
+    id_token = serializers.CharField()
+    
 
 
-# class UpdateUserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ("email", "password")
-#         extra_kwargs = {
-#             'password': {"write_only": True}
-#         }
-
-#     def update(self, instance, validated_data):
-#         instance.email = validated_data.get('email', instance.email)
-
-#         password = validated_data.get('password')
-#         if password and check_password(password, instance.password):
-
-#             new_password = validated_data.get('new_password')
-#             if new_password:
-#                 instance.set_password(new_password)
-
-#             instance.save()
-#             return instance
-
-#         raise serializers.ValidationError("Wrong password")

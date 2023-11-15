@@ -30,6 +30,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    #username = models.CharField(max_length=30, unique=False, default='')
     name = models.CharField(max_length=251, unique=False, blank=False, default='no_name')
     photo  = models.ImageField(blank=True, null=True)
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)

@@ -29,6 +29,7 @@ DEBUG = True
 # '127.0.0.1', 'todoappdeploy.pythonanywhere.com',
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
 
 # Application definition
 
@@ -43,6 +44,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework.authtoken',   
+    
+    
 
     'todo_api',
     'user',
@@ -50,6 +54,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    
+    
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -58,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'todo.urls'
@@ -111,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'user.User'
-
+#ACCOUNT_USER_MODEL = 'user.User'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -136,7 +144,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = [
-    'user.auth_back.EmailBackend'
+    'user.auth_back.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 
@@ -178,10 +187,20 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-SITE_ID = 1
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+
+
+
+
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
+# ACCOUNT_USERNAME_REQUIRED = False
+# LOGIN_REDIRECT_URL = '/'  # URL para redirecionar após o login bem-sucedido
+# # Desativa a verificação por email para simplificar o processo
+# ACCOUNT_EMAIL_VERIFICATION = 'none'
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Use o email para autenticação
+# ACCOUNT_EMAIL_REQUIRED = True  # O email é obrigatório
+# ACCOUNT_UNIQUE_EMAIL = True  # Garanta que o email seja único
+# ACCOUNT_UNIQUE_USERNAME = False  # Não é necessário um nome de usuário exclusivo
